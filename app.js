@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
+const userRoutes = require('./api/routes/user');
 mongoose.connect('mongodb://pedroh2604:'+ process.env.MONGO_ATLAS_PW +'@noderestapi-shard-00-00-hbzpo.mongodb.net:27017,noderestapi-shard-00-01-hbzpo.mongodb.net:27017,noderestapi-shard-00-02-hbzpo.mongodb.net:27017/test?ssl=true&replicaSet=nodeRestApi-shard-0&authSource=admin&retryWrites=true',
 { 
 	useNewUrlParser: true 
@@ -18,6 +19,7 @@ mongoose.connect('mongodb://pedroh2604:'+ process.env.MONGO_ATLAS_PW +'@noderest
 // });
 
 app.use(morgan('dev'));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
@@ -34,6 +36,7 @@ app.use((req, res, next) => {
 // Routes which should handle requests
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
+app.use('/user', userRoutes);
 
 // if it reaches this line, no route was found
 app.use((req, res, next) => {
